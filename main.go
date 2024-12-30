@@ -13,6 +13,10 @@ type User struct {
 	BirthDate time.Time
 }
 
+func (m *User) printUserName() string {
+	return m.FirstName + " " + m.LastName
+}
+
 func main() {
 
 	user := User{
@@ -20,8 +24,8 @@ func main() {
 		LastName:  "Doe",
 		Age:       25,
 		Phone:     "123456789",
-		//BirthDate: time.Now(),
+		BirthDate: time.Now(),
 	}
 
-	log.Println(user.FirstName, user.BirthDate)
+	log.Println(user.printUserName())
 }
