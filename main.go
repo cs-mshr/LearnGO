@@ -3,21 +3,30 @@ package main
 import "log"
 
 func main() {
-	isTrue := true
+	//var myOtherMap map[string]string
+	myMap := make(map[string]string)
 
-	if isTrue {
-		log.Println("Variable is :", isTrue)
-	} else {
-		log.Println("Variable isn't True")
+	myMap["Dog"] = "Fido"
+	myMap["Cat"] = "Garfield"
+	myMap["Bird"] = "Tweety"
+
+	for key, value := range myMap {
+		println(key, " = ", value)
 	}
 
-	for i := 0; i < 10; i++ {
-		log.Println(i)
-	}
+	//Integer Map
+	myIntMap := make(map[string]int)
+	log.Println(myIntMap["Dog"]) // default is zero
 
-	animals := []string{"cat", "dog", "fish"}
-	for _, animal := range animals {
-		log.Println(animal)
-	}
+	myIntMap["Dog"]++
+	log.Println(myIntMap["Dog"]) // zero -> 1
 
+	//Map can have no specified value type also
+	myMapWithoutValueType := make(map[string]interface{})
+	myMapWithoutValueType["Dog"] = "Fido"
+	myMapWithoutValueType["Cat"] = 1
+	myMapWithoutValueType["Bird"] = 7.43
+	for key, value := range myMapWithoutValueType {
+		log.Println(key, " = ", value)
+	}
 }
