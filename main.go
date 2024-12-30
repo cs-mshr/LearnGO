@@ -1,19 +1,27 @@
 package main
 
-import "log"
+import (
+	"log"
+	"time"
+)
 
-func main() {
-	var myString string
-	myString = "Green"
-	println(myString)
-
-	changeString(&myString)
-	println(myString)
+type User struct {
+	FirstName string
+	LastName  string
+	Age       int
+	Phone     string
+	BirthDate time.Time
 }
 
-func changeString(s *string) {
-	log.Println("the string address is: ", s)
-	log.Println("the string value is: ", *s)
-	newValue := "Blue"
-	*s = newValue
+func main() {
+
+	user := User{
+		FirstName: "John",
+		LastName:  "Doe",
+		Age:       25,
+		Phone:     "123456789",
+		//BirthDate: time.Now(),
+	}
+
+	log.Println(user.FirstName, user.BirthDate)
 }
