@@ -1,23 +1,19 @@
 package main
 
-import "fmt"
+import "log"
 
 func main() {
-	fmt.Println("Hello, World.")
+	var myString string
+	myString = "Green"
+	println(myString)
 
-	var message string
-	var i int
-
-	message = "Good bye Java"
-	fmt.Println(message)
-
-	i = 10
-	fmt.Println("i is set to:", i)
-
-	message2, m3 := saySomething()
-	fmt.Println(message2, " ", m3)
+	changeString(&myString)
+	println(myString)
 }
 
-func saySomething() (string, string) {
-	return "what i should return", "else"
+func changeString(s *string) {
+	log.Println("the string address is: ", s)
+	log.Println("the string value is: ", *s)
+	newValue := "Blue"
+	*s = newValue
 }
