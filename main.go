@@ -1,23 +1,54 @@
 package main
 
 import (
-	"awesomeProject/helpers"
+	"encoding/json"
 	"log"
 )
 
-const numPool = 100
-
-func CalValues(intChan chan int) {
-	randomNumber := helpers.RandonNumber(numPool)
-	intChan <- randomNumber
+type Person struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
 }
 
 func main() {
-	intChan := make(chan int)
-	defer close(intChan)
+	myJson := `[
+		{
+			"name": "John", 
+			"age": 30
+		},
+		{
+			"name": "Jane",
+			"age": 25
+		}
+	]`
 
-	go CalValues(intChan)
+	var unmarshalled []Person
 
-	val := <-intChan
-	log.Println(val)
+	err := json.Unmarshal([]byte(myJson), &unmarshalled)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Println(unmarshalled)
+
+	var mySlice []Person
+	m1 := Person{
+		Name: "akshat",
+		Age:  23,
+	}
+	m2 := Person{
+		Name: "ajay",
+		Age:  21,
+	}
+
+	for i := 0; i < 2; i++ {
+		mySlice = append(mySlice, m1, m2)
+	}
+
+	//newJson, err := json.Marshal(mySlice)
+	newJson, err := json.MarshalIndent(mySlice, "", "    ")
+	if err != nil {
+		panic(err)
+	}
+	log.Println(string(newJson))
 }
