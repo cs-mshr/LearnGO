@@ -2,6 +2,11 @@ package main
 
 import "testing"
 
+// go test
+// go test -v
+// go test -cover
+// go test -coverprofile=coverage.out && go tool cover -html=coverage.out
+
 var tests = []struct {
 	name        string
 	dividend    float32
