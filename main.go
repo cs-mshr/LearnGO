@@ -1,25 +1,37 @@
 package main
 
 import (
-	"errors"
+	"fmt"
+	"io"
+	"io/ioutil"
 	"log"
+	"os"
 )
 
 func main() {
+	content := "Enter all this data into a file"
 
-	result, err := divide(100, 0)
-	if err != nil {
-		log.Println(err)
-		return
-	}
+	file, err := os.Create("./log.txt")
+	checkNilError(err)
 
-	log.Println("Result: ", result)
+	length, err := io.WriteString(file, content)
+	checkNilError(err)
 
+	fmt.Println("length is: ", length)
+	defer file.Close()
+
+	readFile("log.txt")
 }
 
-func divide(x, y float32) (float32, error) {
-	if y == 0 {
-		return -1, errors.New("Cannot divide by zero")
+func readFile(filename string) {
+	databyte, err := ioutil.ReadFile(filename)
+	checkNilError(err)
+
+	log.Println(string(databyte))
+}
+
+func checkNilError(err error) {
+	if err != nil {
+		panic(err)
 	}
-	return x / y, nil
 }
