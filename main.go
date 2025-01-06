@@ -1,37 +1,58 @@
 package main
 
-import (
-	"fmt"
-	"io"
-	"io/ioutil"
-	"log"
-	"os"
-)
+import "fmt"
+
+type Shape interface {
+	Area() float64
+}
+
+type Rectangle struct {
+	Width, Height float64
+}
+
+type Circle struct {
+	Radius float64
+}
+
+func (r Rectangle) Area() float64 {
+	return r.Width * r.Height
+}
+
+func (c Circle) Area() float64 {
+	return 3.14 * c.Radius * c.Radius
+}
+
+func calculateArea(s Shape) float64 {
+	return s.Area()
+}
 
 func main() {
-	content := "Enter all this data into a file"
+	rect := Rectangle{Width: 10, Height: 5}
+	cir := Circle{Radius: 7}
 
-	file, err := os.Create("./log.txt")
-	checkNilError(err)
+	fmt.Println("Area of Rectangle:", calculateArea(rect))
+	fmt.Println("Area of Circle:", calculateArea(cir))
 
-	length, err := io.WriteString(file, content)
-	checkNilError(err)
+	mysterBox := interface{}(10)
+	describeValue(mysterBox)
 
-	fmt.Println("length is: ", length)
-	defer file.Close()
+	retrievedInt, ok := mysterBox.(int)
+	if ok {
+		fmt.Println("Retrieved int:", retrievedInt)
+	} else {
+		fmt.Println("Failed to retrieve int")
+	}
 
-	readFile("log.txt")
 }
 
-func readFile(filename string) {
-	databyte, err := ioutil.ReadFile(filename)
-	checkNilError(err)
-
-	log.Println(string(databyte))
-}
-
-func checkNilError(err error) {
-	if err != nil {
-		panic(err)
+func describeValue(i interface{}) {
+	fmt.Printf("Type: %T, Value: %v\n", i, i)
+	switch v := i.(type) {
+	case int:
+		fmt.Println("This is an int:", v)
+	case string:
+		fmt.Println("This is a string:", v)
+	default:
+		fmt.Println("Unknown type")
 	}
 }
